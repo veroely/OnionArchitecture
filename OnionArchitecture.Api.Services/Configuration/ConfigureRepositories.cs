@@ -9,6 +9,7 @@ namespace OnionArchitecture.Api.Services.Configuration
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAssignmentsRepository, AssignmentsRepository>();
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
         }
     }
 }

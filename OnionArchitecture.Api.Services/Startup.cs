@@ -29,11 +29,19 @@ namespace OnionArchitecture.Api.Services
         {
             services.AddDatabase(Configuration);
             services.AddRepositories();
-            services.AddServices();
+            services.AddServices(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OnionArchitecture.Api.Services", Version = "v1" });
+                //configuration to show authorize in swagger 
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
             });
         }
 
@@ -50,6 +58,8 @@ namespace OnionArchitecture.Api.Services
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
